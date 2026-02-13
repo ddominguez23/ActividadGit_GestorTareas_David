@@ -1,16 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Gestor de tareas</title>
+
+    <style>
+        #btn-add {
+            background: red;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #btn-delete {
+            background: blue;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
     <h1>Gestor de tareas</h1>
 
     <input id="taskInput" type="text" placeholder="Escribe una tarea">
-    <button onclick="addTask()">Añadir tarea</button>
+
+    <button id="btn-add" onclick="addTask()">Añadir tarea</button>
+    <button id="btn-delete">Eliminar tarea</button>
 
     <ul id="taskList"></ul>
 
