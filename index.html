@@ -29,7 +29,7 @@
     <input id="taskInput" type="text" placeholder="Escribe una tarea">
 
     <button id="btn-add" onclick="addTask()">Añadir tarea</button>
-    <button id="btn-delete">Eliminar tarea</button>
+    <button id="btn-delete" onclick="deleteSelected()">Eliminar tarea</button>
 
     <ul id="taskList"></ul>
 
@@ -77,6 +77,18 @@
 
             clearInput();
             setStatus("Tarea añadida correctamente.", "ok");
+            render();
+        }
+
+        function deleteSelected() {
+            if (selectedId === null) {
+                setStatus("Selecciona una tarea antes de eliminar.", "danger");
+                return;
+            }
+
+            tasks = tasks.filter(t => t.id !== selectedId);
+
+            selectedId = null;
             render();
         }
     </script>
