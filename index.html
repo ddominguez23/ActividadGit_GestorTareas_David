@@ -20,6 +20,14 @@
             border: none;
             cursor: pointer;
         }
+
+        #btn-edit {
+            background: orange;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -30,6 +38,7 @@
 
     <button id="btn-add" onclick="addTask()">Añadir tarea</button>
     <button id="btn-delete" onclick="deleteSelected()">Eliminar tarea</button>
+    <button id="btn-edit" onclick="editSelected()">Editar tarea</button>
 
     <ul id="taskList"></ul>
 
@@ -87,6 +96,26 @@
             }
 
             tasks = tasks.filter(t => t.id !== selectedId);
+
+            selectedId = null;
+            render();
+        }
+
+        function editSelected() {
+            if (selectedId === null) {
+                setStatus("Selecciona una tarea antes de editar.", "danger");
+                return;
+            }
+
+            const newText = prompt("Nuevo texto para la tarea:");
+
+            if (!newText || newText.trim() === "") {
+                setStatus("El texto no puede estar vacío.", "danger");
+                return;
+            }
+
+            const task = tasks.find(t => t.id === selectedId);
+            task.text = newText.trim();
 
             selectedId = null;
             render();
