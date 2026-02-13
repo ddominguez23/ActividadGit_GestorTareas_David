@@ -28,6 +28,14 @@
             border: none;
             cursor: pointer;
         }
+
+        #btn-done {
+            background: green;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -39,6 +47,7 @@
     <button id="btn-add" onclick="addTask()">Añadir tarea</button>
     <button id="btn-delete" onclick="deleteSelected()">Eliminar tarea</button>
     <button id="btn-edit" onclick="editSelected()">Editar tarea</button>
+    <button id="btn-done" onclick="markAsDone()">Marcar como hecha</button>
 
     <ul id="taskList"></ul>
 
@@ -64,7 +73,7 @@
             list.innerHTML = "";
             tasks.forEach(t => {
                 const li = document.createElement("li");
-                li.textContent = t.text + " (ID " + t.id + ")";
+                li.textContent = (t.done ? "✔️ " : "") + t.text + " (ID " + t.id + ")";
                 li.onclick = () => { selectedId = t.id; };
                 list.appendChild(li);
             });
@@ -116,6 +125,19 @@
 
             const task = tasks.find(t => t.id === selectedId);
             task.text = newText.trim();
+
+            selectedId = null;
+            render();
+        }
+
+        function markAsDone() {
+            if (selectedId === null) {
+                setStatus("Selecciona una tarea antes de marcarla como hecha.", "danger");
+                return;
+            }
+
+            const task = tasks.find(t => t.id === selectedId);
+            task.done = true;
 
             selectedId = null;
             render();
