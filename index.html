@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de tareas</title>
+</head>
+<body>
+
+    <h1>Gestor de tareas</h1>
+
+    <input id="taskInput" type="text" placeholder="Escribe una tarea">
+    <button onclick="addTask()">Añadir tarea</button>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        let tasks = [];
+        let nextId = 1;
+        let selectedId = null;
+
+        function readInputTrimmed() {
+            return document.getElementById("taskInput").value.trim();
+        }
+
+        function clearInput() {
+            document.getElementById("taskInput").value = "";
+        }
+
+        function setStatus(msg, type) {
+            console.log(msg);
+        }
+
+        function render() {
+            const list = document.getElementById("taskList");
+            list.innerHTML = "";
+            tasks.forEach(t => {
+                const li = document.createElement("li");
+                li.textContent = t.text + " (ID " + t.id + ")";
+                li.onclick = () => { selectedId = t.id; };
+                list.appendChild(li);
+            });
+        }
+
+        function addTask() {
+            const text = readInputTrimmed();
+
+            if (!text) {
+                setStatus("No puedes añadir una tarea vacía.", "danger");
+                return;
+            }
+
+            tasks.push({
+                id: nextId++,
+                text: text,
+                done: false
+            });
+
+            clearInput();
+            setStatus("Tarea añadida correctamente.", "ok");
+            render();
+        }
+    </script>
+
+</body>
+</html>
